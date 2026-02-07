@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="applyJob" method="post" th:object="${applicant}"enctype="multipart/form-data">
+      <label style="display:none" for="id">Id</label>
+      <input style="display:none" type="number" id="id" name="id" th:field="*{id}" /><br />
+       <input style="display:none" type="number" th:field="*{jobPostID}" /><br />
+      <label for="name">Full Name :</label>
+      <input type="text" id="name" name="fullName" th:field="*{fullName}" required/><br />
+      <label for="email">Email :</label>
+      <input type="email" id="email" name="email"  th:field="*{email}" required/><br />
+      <label for="number">Contact Number :</label>
+      <input type="number" id="number" name="contactNumber"  th:field="*{contactNumber}" required/><br />
+      <label for="anumber">Alternate Number :</label>
+      <input type="number" id="anumber" name="alternateNumber" th:field="*{alternateNumber}" required /><br />
+      <label for="graduation">Highest Qualification :</label>
+     <select name="qualification" th:field="*{qualification}" required>
+     <option th:text="'B.Tech'" value="B.tech"></option>
+      <option th:text="'10'" value="10"></option>
+       <option th:text="'10+2'" value="10+2"></option>
+        <option th:text="'Diploma'" value="Diploma"></option>
+         <option th:text="'M.Tech'" value="M.Tech"></option>
+          <option th:text="'M.B.A'" value="M.B.A"></option>
+           <option th:text="'M.C.A'" value="M.C.A"></option>
+           <option th:text="'C.A'" value="C.A"></option>
+     </select>
+      <label for="score">CGPA/percentage :</label>
+      <input type="number" id="score" name="score" th:field="*{score}" step="any" required/><br />
+      <label for="skills">Skills :</label>
+      <input type="text" id="skills" name="skills" th:field="*{skills}" required/><br />
+       <label for="resume">Resume/CV :</label>
+      <input type="file" id="resume" name="resume" accept=".pdf,.doc,.docx,.txt" th:field="*{resume}" required/><br />
+      <button type="submit">Apply</button>
+    </form>
+  </body>
+</html>

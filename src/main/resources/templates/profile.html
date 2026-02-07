@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile Page</title>
+
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", sans-serif; }
+        body { background: #f3f4f7; padding-bottom: 40px; }
+
+        
+        .top-bar {
+            width: 85%; 
+            margin: 20px auto;
+            display: flex;
+            justify-content: flex-start;
+        }
+        .home-btn {
+            background: #2a66f5;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .container { width: 85%; margin: 20px auto; }
+        @media (max-width: 700px) { .container { width: 95%; } }
+
+        .card {
+            background: #fff; padding: 20px; border-radius: 12px; margin-top: 18px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.06); 
+        }
+        .section-title { font-size: 20px; margin-bottom: 10px; color: #2a66f5; font-weight: 600; }
+
+        label { font-weight: 600; color: #222; margin-top: 12px; display: block; }
+        .field-box {
+            background: #efefef;
+            padding: 10px 12px;
+            border-radius: 8px;
+            margin-top: 6px;
+            color: #444;
+            width: 100%;
+        }
+
+        input, textarea {
+            width: 100%; padding: 8px 10px; border: 1px solid #ccc;
+            border-radius: 8px; margin-top: 6px; margin-bottom: 10px;
+            background: #efefef; font-size: 14px; color: #444;
+        }
+        textarea { height: 80px; }
+
+        .buttons { margin-top: 20px; display: flex; gap: 15px; }
+        button { padding: 10px 18px; border: none; border-radius: 8px; cursor: pointer; font-size: 15px; }
+        #editBtn { background: #2a66f5; color: white; }
+        #saveBtn { background: #28a745; color: white; display: none; }
+        #editResumeBtn { background: #ff9800; color: white; }
+        #uploadResumeBtn { background: #28a745; color: white; display: none; }
+
+        .education-row {
+            margin-top: 14px;
+            padding: 12px;
+            background: #f8f8f8;
+            border-radius: 10px;
+            border-left: 4px solid #2a66f5;
+        }
+
+        .edu-label { font-weight: 600; color: #333; margin-bottom: 3px; }
+    </style>
+</head>
+
+<body>
+<div class="top-bar">
+    <a class="home-btn" th:href="@{/User/loginSuccess}">← Go to Home</a>
+</div>
+
+<form class="container" th:action="@{/User/profileUpdate}" th:object="${user}" method="post">
+    <input style="display:none" type="number" th:value="${user.id}" name="profileid"/>
+
+    <div class="card">
+        <div class="section-title">Profile Overview</div>
+        <label>Full Name</label>
+        <input type="text" th:field="*{fullName}" readonly />
+
+        <label>Description</label>
+        <textarea th:field="*{profileSummary}" readonly></textarea>
+    </div>
+
+    <div class="card">
+        <div class="section-title">Basic Details</div>
+
+        <label>Gender</label>
+        <input type="text" th:field="*{gender}" readonly />
+
+        <label>City</label>
+        <input type="text" th:field="*{city}" readonly />
+
+        <label>Date of Birth</label>
+        <input type="date" th:field="*{dateOfBirth}" readonly />
+
+        <label>Email</label>
+        <input type="email" th:field="*{email}" readonly />
+
+        <label>Phone Number</label>
+        <input type="text" th:field="*{contactNumber}" readonly />
+    </div>
+
+    <div class="card">
+        <div class="section-title">Education</div>
+
+        <div class="education-row">
+            <div class="edu-label">10th Details</div>
+            <label>Name</label>
+            <input type="text" th:field="*{SName}" readonly />
+            <label>Board</label>
+            <input type="text" th:field="*{SBoard}" readonly />
+            <label>Score</label>
+            <input type="text" th:field="*{SScore}" readonly />
+            <label>Passing Year</label>
+            <input type="text" th:field="*{SPassingYear}" readonly />
+        </div>
+
+        <div class="education-row">
+            <div class="edu-label">Intermediate Details</div>
+            <label>Name</label>
+            <input type="text" th:field="*{HName}" readonly />
+            <label>Board</label>
+            <input type="text" th:field="*{HBoard}" readonly />
+            <label>Score</label>
+            <input type="text" th:field="*{HScore}" readonly />
+            <label>Passing Year</label>
+            <input type="text" th:field="*{HPassingYear}" readonly />
+        </div>
+
+        <div class="education-row">
+            <div class="edu-label">Degree Details</div>
+            <label>Name</label>
+            <input type="text" th:field="*{GName}" readonly />
+            <label>Board</label>
+            <input type="text" th:field="*{GBoard}" readonly />
+            <label>Score</label>
+            <input type="text" th:field="*{GScore}" readonly />
+            <label>Passing Year</label>
+            <input type="text" th:field="*{GPassingYear}" readonly />
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="section-title">Key Skills</div>
+        <textarea th:field="*{skills}" readonly></textarea>
+    </div>
+
+    <div class="card">
+        <div class="section-title">Languages</div>
+        <textarea th:field="*{language}" readonly></textarea>
+    </div>
+
+    <div class="card">
+        <div class="section-title">Internships</div>
+        <textarea th:field="*{Internship}" readonly></textarea>
+    </div>
+
+    <div class="card">
+        <div class="section-title">Projects</div>
+        <textarea th:field="*{Projects}" readonly></textarea>
+    </div>
+
+    <div class="card">
+        <div class="section-title">Achievements</div>
+        <textarea th:field="*{Achievements}" readonly></textarea>
+    </div>
+
+    <div class="card">
+        <div class="section-title">Experience</div>
+        <textarea th:field="*{Experience}" readonly></textarea>
+    </div>
+
+    <div class="buttons">
+        <button type="button" id="editBtn">Edit Profile</button>
+        <button type="submit" id="saveBtn">Save Profile</button>
+    </div>
+</form>
+
+<!-- RESUME FORM -->
+<form class="container" th:action="@{/User/editResume}" method="post" enctype="multipart/form-data">
+    <input type="hidden" th:value="${user.id}" name="profileid"/>
+    <div class="card">
+        <div class="section-title">Resume</div>
+
+        <label>Uploaded Resume</label>
+        <a th:href="@{/User/file(id=${user.id})}" th:text="${user.fileName}"></a>
+
+        <input type="file" name="resume" accept=".pdf,.doc,.docx" class="file-input" />
+
+        <div class="buttons">
+            <button type="button" id="editResumeBtn">Edit Resume</button>
+            <button type="submit" id="uploadResumeBtn">Upload Resume</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    document.getElementById("editBtn").onclick = function () {
+        document.querySelectorAll("form:first-of-type input, form:first-of-type textarea").forEach(el => {
+            el.removeAttribute("readonly");
+            el.style.background = "#fff";
+        });
+        document.getElementById("saveBtn").style.display = "inline-block";
+        document.getElementById("editBtn").style.display = "none";
+    };
+
+    document.getElementById("editResumeBtn").onclick = function () {
+        document.querySelector(".file-input").style.display = "block";
+        document.getElementById("uploadResumeBtn").style.display = "inline-block";
+        document.getElementById("editResumeBtn").style.display = "none";
+    };
+</script>
+
+</body>
+</html>

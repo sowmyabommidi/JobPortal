@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Portal</title>
+
+    <!-- Google Font -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* RESET + GLOBAL */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background: #ffffff;
+      }
+
+      /* NAVBAR */
+      #profileLi {
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid black;
+      }
+      .custom-focus:focus {
+        box-shadow: none;
+        border-color: black;
+      }
+      .dropdown-toggle::after {
+        display: none;
+      }
+      .pos {
+        left: -35%;
+        transform: translateX(-35%);
+      }
+      nav li a:hover {
+        color: rgb(11, 11, 190) !important;
+      }
+
+      /* MAIN APP SHELL */
+      .app-shell {
+        width: 100%;
+        background: #f5f7fb;
+        padding: 40px;
+        margin-top: 20px;
+      }
+
+      .content {
+        display: flex;
+        gap: 32px;
+      }
+      .main {
+        flex: 3;
+      }
+      .sidebar {
+        flex: 1.5;
+      }
+
+      .section-title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 24px;
+        color: #111827;
+      }
+      .section-title span {
+        color: #0c48ef;
+      }
+
+      /* JOB CARDS */
+      .job-list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+      .job-card {
+        background: #fff;
+        border-radius: 18px;
+        padding: 18px 22px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+        transition: 0.25s ease;
+        cursor: pointer;
+      }
+      .job-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 35px rgba(15, 23, 42, 0.16);
+      }
+      .job-main {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+      }
+      .job-logo {
+        width: 44px;
+        height: 44px;
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        color: white;
+        font-size: 20px;
+      }
+      .job-logo.webflow {
+        background: #e1e9ff;
+        color: #2563eb;
+      }
+      .job-logo.google {
+        background: #fee2e2;
+        color: #ea4335;
+      }
+      .job-logo.facebook {
+        background: #dbeafe;
+        color: #1877f2;
+      }
+
+      .job-info-title {
+        font-size: 16px;
+        font-weight: 600;
+        color: #111827;
+        margin-bottom: 4px;
+      }
+      .job-info-company {
+        font-size: 13px;
+        color: #6b7280;
+        margin-bottom: 6px;
+      }
+
+      .job-tags {
+        display: flex;
+        gap: 8px;
+        font-size: 11px;
+      }
+      .tag {
+        background: #eef2ff;
+        padding: 4px 10px;
+        border-radius: 999px;
+        color: #4b5563;
+      }
+      .tag-icon {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+      }
+
+      .job-side {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        font-size: 12px;
+        color: #6b7280;
+      }
+      .badge-featured {
+        padding: 6px 12px;
+        background: #facc15;
+        border-radius: 999px;
+        font-size: 11px;
+        font-weight: 600;
+        color: #92400e;
+      }
+      /*************************************
+      YOUR JOB DETAILS CSS (FULL PAGE)
+    **************************************/
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background: #f5f7fb;
+        color: #222;
+        line-height: 1.5;
+      }
+
+      #main {
+        max-width: 960px;
+        margin: 40px auto;
+        padding: 0 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .box {
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 18px 20px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+        border: 1px solid #e5e7eb;
+      }
+
+      #jobmain {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        align-items: center;
+      }
+
+      #job {
+        flex: 1;
+        min-width: 0;
+      }
+
+      #companyname h1 {
+        font-size: 1.5rem;
+        margin-bottom: 6px;
+      }
+
+      .job-meta {
+        font-size: 0.9rem;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        color: #4b5563;
+      }
+
+      .badge {
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: #eef2ff;
+        font-size: 0.8rem;
+      }
+
+      #logo {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        align-items: flex-end;
+        min-width: 140px;
+      }
+
+      #companylogo {
+        height: 64px;
+        width: 64px;
+        border-radius: 16px;
+        object-fit: cover;
+        border: 1px solid #e5e7eb;
+      }
+
+      .job-code {
+        font-size: 0.8rem;
+        color: #9ca3af;
+      }
+
+      button.apply-btn {
+        padding: 8px 18px;
+        border-radius: 999px;
+        border: none;
+        cursor: pointer;
+        font-size: 0.95rem;
+        font-weight: 600;
+        background: #1d4ed8;
+        color: #ffffff;
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.35);
+        transition: 0.15s ease;
+      }
+
+      button.apply-btn:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 6px 18px rgba(37, 99, 235, 0.4);
+        background: #1e40af;
+      }
+
+      #highlights {
+        background-color: #eff6ff;
+        border-radius: 16px;
+        padding: 14px 16px;
+        margin-bottom: 14px;
+      }
+
+      #highlights h2 {
+        font-size: 1.1rem;
+        margin-bottom: 6px;
+      }
+
+      .highlights-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px 20px;
+        margin-top: 8px;
+      }
+
+      .description-text {
+        font-size: 0.9rem;
+        color: #374151;
+        margin: 6px 0 10px 0;
+      }
+
+      .requirements-list {
+        font-size: 0.9rem;
+        margin-left: 18px;
+        margin-top: 6px;
+        color: #374151;
+      }
+
+      .requirements-list li {
+        margin-bottom: 4px;
+      }
+      /* SIDEBAR */
+     
+      
+
+      @media (max-width: 900px) {
+        .content {
+          flex-direction: column;
+        }
+      }
+
+      /* FOOTER */
+      footer {
+        display: flex;
+        justify-content: space-evenly;
+        align-items: center;
+        background: rgb(105, 104, 104);
+        padding: 20px 0;
+        color: white;
+        margin-top: 40px;
+      }
+      footer a {
+        text-decoration: none;
+        color: white;
+      }
+      .f1,
+      .f3 {
+        text-align: center;
+      }
+      /* FOOTER CSS - Add this to your stylesheet */
+      .jf-footer {
+        background-color: #2a2b2d;
+        color: #b0b0b0;
+        padding: 60px 0 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+      }
+      .jf-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+      .jf-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1.5fr;
+        gap: 90px;
+      }
+      @media (max-width: 992px) {
+        .jf-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 576px) {
+        .jf-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Brand Section */
+      .jf-brand-section {
+        padding-right: 20px;
+      }
+      .jf-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+      .jf-logo-icon {
+        width: 45px;
+        height: 45px;
+        background-color: #2563eb;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+      .jf-logo-text {
+        font-size: 24px;
+        font-weight: 700;
+        color: white;
+        letter-spacing: 1px;
+      }
+      .jf-description {
+        font-size: 14px;
+        line-height: 1.7;
+        margin-bottom: 25px;
+        color: #9a9a9a;
+      }
+      .jf-contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 25px;
+      }
+      .jf-contact-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        color: #9a9a9a;
+      }
+      .jf-contact-item svg {
+        color: #2563eb;
+        flex-shrink: 0;
+      }
+      .jf-social-links {
+        display: flex;
+        gap: 12px;
+      }
+      .jf-social-icon {
+        width: 40px;
+        height: 40px;
+        background-color: rgba(37, 99, 235, 0.15);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #2563eb;
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+      .jf-social-icon:hover {
+        background-color: #2563eb;
+        color: white;
+        transform: translateY(-3px);
+      }
+
+      /* Links Sections */
+      .jf-links-section {
+        padding-top: 10px;
+      }
+      .jf-section-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: white;
+        margin-bottom: 25px;
+        position: relative;
+        padding-bottom: 12px;
+      }
+      .jf-section-title::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 40px;
+        height: 3px;
+        background-color: #2563eb;
+        border-radius: 2px;
+      }
+      .jf-links-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .jf-links-list li {
+        margin-bottom: 12px;
+      }
+      .jf-links-list a {
+        color: #9a9a9a;
+        text-decoration: none;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        display: inline-block;
+      }
+      .jf-links-list a:hover {
+        color: #2563eb;
+        padding-left: 8px;
+      }
+      .jf-newsletter-section {
+        position: relative;
+      }
+      .jf-newsletter-text {
+        color: #a9b6b4;
+        font-size: 14px;
+        margin-bottom: 12px;
+        max-width: 360px;
+      }
+      .jf-form-wrap {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .jf-newsletter-form {
+        display: flex;
+        align-items: center;
+        gap: 0;
+        width: 100%;
+        max-width: 420px;
+        position: relative;
+      }
+      .jf-newsletter-input {
+        flex: 1;
+        padding: 12px 16px;
+        border-radius: 12px 0 0 12px;
+        border: 0;
+        background: #eaf2f7;
+        color: #052a2a;
+        font-size: 14px;
+        outline: none;
+        box-shadow: inset 0 2px 0 rgba(0, 0, 0, 0.02);
+        transition: box-shadow 0.18s ease, transform 0.12s ease;
+      }
+      .jf-newsletter-input:focus {
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+        transform: translateY(-2px);
+      }
+      .jf-newsletter-input::placeholder {
+        color: #86979a;
+      }
+
+      /* button uses relative positioning so we can animate arrow -> check inside it */
+      .jf-newsletter-btn {
+        position: relative;
+        width: 64px;
+        height: 44px;
+        border-radius: 0 12px 12px 0;
+        border: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #2f6af0;
+        cursor: pointer;
+        box-shadow: 0 8px 22px rgba(47, 106, 240, 0.14);
+        transition: transform 0.14s ease, box-shadow 0.14s ease,
+          background 0.14s;
+        overflow: hidden;
+      }
+      .jf-newsletter-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 28px rgba(47, 106, 240, 0.18);
+      }
+      .jf-newsletter-btn:active {
+        transform: translateY(-1px);
+      }
+
+      /* arrow & check icons inside the button */
+      .jf-newsletter-btn .icon {
+        display: block;
+        width: 22px;
+        height: 22px;
+        transition: transform 0.28s cubic-bezier(0.2, 0.9, 0.2, 1),
+          opacity 0.2s ease;
+      }
+
+      /* check hidden initially (scaled down) */
+      .jf-newsletter-btn .check {
+        transform: translateX(-6px) scale(0.2);
+        opacity: 0;
+        position: absolute;
+      }
+      .jf-newsletter-btn .arrow {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+        position: relative;
+      }
+
+      /* on success: arrow flies left & fades, check scales up and becomes visible */
+      .jf-newsletter-form.submitted .jf-newsletter-btn .arrow {
+        transform: translateX(-10px) scale(0.6);
+        opacity: 0;
+      }
+
+      .jf-newsletter-form.submitted .jf-newsletter-btn .check {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+      }
+      .jf-newsletter-form.submitted .jf-newsletter-btn {
+        box-shadow: 0 18px 40px rgba(47, 106, 240, 0.18);
+        background: linear-gradient(180deg, #2f6af0, #1f54d8);
+      }
+      .jf-newsletter-form.invalid .jf-newsletter-input {
+        animation: jf-shake 0.36s;
+        box-shadow: 0 0 0 6px rgba(255, 80, 80, 0.06);
+      }
+
+      @keyframes jf-shake {
+        0% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-6px);
+        }
+        50% {
+          transform: translateX(6px);
+        }
+        75% {
+          transform: translateX(-4px);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+
+      /* success text (optional label inside button area) - keep hidden by default */
+      .jf-success-label {
+        position: absolute;
+        left: calc(100% + 18px);
+        top: 50%;
+        transform: translateY(-50%);
+        color: #dff3ef;
+        background: transparent;
+        font-size: 13px;
+        opacity: 0;
+        transition: opacity 0.28s ease, transform 0.28s ease;
+        pointer-events: none;
+      }
+      .jf-newsletter-form.submitted + .jf-success-label {
+        opacity: 1;
+        transform: translateY(-50%) translateX(0);
+      }
+
+      /* bottom bar - compact and centered */
+      .jf-bottom-bar {
+        border-top: 1px solid rgba(255, 255, 255, 0.03);
+        margin-top: 26px;
+        padding: 14px 0 6px;
+        text-align: center;
+      }
+      .jf-bottom-bar p {
+        margin: 0;
+        color: #c8cbcb;
+        font-size: 14px;
+      }
+
+      /* tiny accessible-only helper */
+      .sr-only {
+        position: absolute !important;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+        border: 0;
+      }
+      :root {
+        --nav-height: 70px;
+        --primary-text: #111111;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Outfit", sans-serif;
+      }
+
+      /**************** NAVBAR ONLY ****************/
+      .navbar {
+        height: var(--nav-height);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background-color: #ffffff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.06);
+      }
+
+      .navbar .container-fluid {
+        max-width: 1280px;
+      }
+
+      .navbar-brand {
+        font-weight: 700;
+        color: rgb(67, 67, 225);
+      }
+
+      .main-nav-menu {
+        margin-left: auto;
+        gap: 2rem;
+      }
+
+      .nav-link {
+        color: var(--primary-text);
+        padding: 10px 28px !important;
+        font-size: 16px;
+      }
+
+      .nav-link:hover {
+        color: rgb(67, 67, 225);
+      }
+    </style>
+  </head>
+
+  <body>
+     <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand text-primary" href="#">JobPortal</a>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul
+            class="navbar-nav mb-2 mb-lg-0 d-flex align-items-center main-nav-menu"
+          >
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/User/home(name=${name},id=${id})}"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/User/AllJobs(name=${name},id=${id})}"
+                >Jobs</a
+              >
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link"
+                th:href="@{/User/yourApplications(name=${name},id=${id})}"
+                >Your Applications</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" th:href="@{/User/contactus}">Contact Us</a>
+            </li>
+            <li>
+              <div class="dropdown">
+                <a
+                  class="btn btn-secondary dropdown-toggle rounded-pill"
+                  href="#"
+                  data-bs-toggle="dropdown"
+                >
+                  <i class="fa-solid fa-user fa-xl"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end pos text-center">
+                  <li>
+                    <a class="dropdown-item" href="#" th:text="${name}"></a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" th:href="@{/User/profile/{id}(id=${id})}"
+                      >Profile</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" th:href="@{/logout}">Log Out</a>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- MAIN JOB LIST -->
+    <div class="app-shell">
+      <main class="content">
+        <!-- YOUR JOB DETAILS CARD -->
+        <div id="main">
+          <!-- TOP SUMMARY CARD -->
+          <div class="box one">
+            <div id="jobmain">
+              <div id="job">
+                <div id="companyname">
+                  <h1 th:text="${post.Title}"></h1>
+                </div>
+
+                <div class="job-meta">
+                  <span class="badge" th:text="${post.ExperienceLevel}" style="background-color:#1e40af;"></span>
+                  <span class="badge" th:text="${post.Package}" style="background-color:#1e40af;"></span>
+                  <span class="badge" th:text="${post.Location}" style="background-color:#1e40af;"></span>
+                  <span class="badge" th:text="${post.EmployementType}" style="background-color:#1e40af;"></span>
+                </div>
+              </div>
+
+              <div id="logo">
+                <p><i th:text="${post.Company}"></i></p>
+                <span class="job-code" th:text="${post.Code}"></span>
+
+                <button class="apply-btn">
+                  <a
+                    style="color: white; text-decoration: none"
+                    th:href="@{/User/apply(jobid=${post.id},profileid=${id})}"
+                    >Apply Now</a
+                  >
+                  
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- DETAIL CARD -->
+          <div class="box two">
+            <div id="highlights">
+              <h2>Job Highlights</h2>
+              <div class="highlights-grid">
+                <div>
+                  <strong>Employment Type:</strong>
+                  <span th:text="${post.EmployementType}"></span>
+                </div>
+                <div>
+                  <strong>Work Type:</strong>
+                  <span th:text="${post.workType}"></span>
+                </div>
+                <div>
+                  <strong>Experience:</strong>
+                  <span th:text="${post.ExperienceLevel}"></span>
+                </div>
+                <div>
+                  <strong>Location:</strong>
+                  <span th:text="${post.Location}"></span>
+                </div>
+              </div>
+            </div>
+
+            <h2 style="text-align:center;">Job Description</h2>
+            <h5><Strong>About the Role</Strong></h5>
+            <p class="description-text" th:text="${post.Description}"></p>
+
+            <h6><strong>Requirements:</strong></h6>
+            <p class="requirements-list">
+              <span th:text="${post.Requirements}"></span>
+            </p>
+
+            <p>
+              <strong>Designation:</strong>
+              <span th:text="${post.Title}"></span>
+            </p>
+
+            <p>
+             <strong> Years of Experience: </strong>
+              <span th:text="${post.ExperienceLevel}"></span>
+            </p>
+          </div>
+        </div>
+      </main>
+    </div>
+
+   <!-- FOOTER HTML - Add this where you want the footer -->
+    <footer class="jf-footer">
+      <div class="jf-container">
+        <div class="jf-grid">
+          <!-- Brand Section -->
+          <div class="jf-brand-section">
+            <div class="jf-logo">
+              <div class="logo-icon">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
+                  <circle
+                    cx="10"
+                    cy="10"
+                    r="4"
+                    stroke="white"
+                    stroke-width="2"
+                  />
+                  <path
+                    d="M20 20L15 15"
+                    stroke="white"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M10 14c-2.5 0-4 1.3-4 3v1"
+                    stroke="white"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </div>
+              <span class="jf-logo-text">JobPortal</span>
+            </div>
+            <p class="jf-description">
+              Your trusted partner in finding the perfect career opportunity. We
+              connect talented professionals with top employers.
+            </p>
+            <div class="jf-contact-info">
+              <div class="jf-contact-item">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+                <span>123 Job Street, Career City</span>
+              </div>
+              <div class="jf-contact-item">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect width="20" height="16" x="2" y="4" rx="2" />
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                </svg>
+                <span>jobportal@gmail.com</span>
+              </div>
+              <div class="jf-contact-item">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                  />
+                </svg>
+                <span>+1 234 567 890</span>
+              </div>
+            </div>
+            <div class="jf-social-links">
+              <a href="#" class="jf-social-icon" aria-label="Facebook">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
+                  />
+                </svg>
+              </a>
+              <a href="#" class="jf-social-icon" aria-label="Twitter">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"
+                  />
+                </svg>
+              </a>
+              <a href="#" class="jf-social-icon" aria-label="Instagram">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                </svg>
+              </a>
+              <a href="#" class="jf-social-icon" aria-label="LinkedIn">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+                  />
+                  <rect width="4" height="12" x="2" y="9" />
+                  <circle cx="4" cy="4" r="2" />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Quick Links -->
+          <div class="jf-links-section">
+            <h3 class="jf-section-title">Quick Links</h3>
+            <ul class="jf-links-list">
+              <li><a href=".navbar">Home</a></li>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Services</a></li>
+              <li><a href="#">Contact Us</a></li>
+            </ul>
+          </div>
+
+          <!-- Find Jobs -->
+          <div class="jf-links-section">
+            <h3 class="jf-section-title">Find Jobs</h3>
+            <ul class="jf-links-list">
+              <li><a href="#">Browse Jobs</a></li>
+              <li><a href="#">Companies</a></li>
+              <li><a href="#">Job Post</a></li>
+              <li><a href="#">Job List</a></li>
+            </ul>
+          </div>
+
+          <!-- Newsletter -->
+          <div class="jf-newsletter-section" aria-labelledby="newsletter-title">
+            <h3 id="newsletter-title" class="jf-section-title">
+              Subscribe Newsletter
+            </h3>
+            <p class="jf-newsletter-text">
+              We have an array of exciting job opportunities that are waiting
+              for talented individuals like you.
+            </p>
+
+            <div class="jf-form-wrap">
+              <form
+                class="jf-newsletter-form"
+                id="jf-newsletter-form"
+                novalidate
+              >
+                <label class="sr-only" for="jf-email">Email</label>
+                <input
+                  id="jf-email"
+                  name="email"
+                  type="email"
+                  class="jf-newsletter-input"
+                  placeholder="Enter your email"
+                  required
+                  aria-required="true"
+                />
+                <button
+                  type="submit"
+                  class="jf-newsletter-btn"
+                  aria-label="Subscribe"
+                >
+                  <!-- arrow (shown initially) -->
+                  <svg
+                    class="icon arrow"
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="m12 5 7 7-7 7" />
+                  </svg>
+                  <!-- check (hidden initially) -->
+                  <svg
+                    class="icon check"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M20 6L9 17l-5-5" />
+                  </svg>
+                </button>
+              </form>
+
+              <!-- optional small label that appears to the right of the button on success (kept subtle) -->
+              <div
+                class="jf-success-label"
+                role="status"
+                id="jf-success-text"
+                aria-live="polite"
+                aria-hidden="true"
+              >
+                Subscribed
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Bar -->
+        <div class="jf-bottom-bar">
+          <p>Copyright © 2024 JobPortal. All Rights Reserved.</p>
+        </div>
+      </div>
+    </footer>
+    <!-- ====== JS: validation + animate arrow->check + show label ====== -->
+    <script>
+      (function () {
+        const form = document.getElementById("jf-newsletter-form");
+        const input = document.getElementById("jf-email");
+        const successText = document.getElementById("jf-success-text");
+
+        function isValidEmail(v) {
+          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+        }
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          form.classList.remove("invalid");
+
+          const email = input.value.trim();
+          if (!isValidEmail(email)) {
+            // invalid: shake input
+            form.classList.add("invalid");
+            input.focus();
+            setTimeout(() => form.classList.remove("invalid"), 700);
+            return;
+          }
+
+          // success UI: show icon animation inside button and label
+          input.setAttribute("disabled", "true");
+          form.classList.add("submitted"); // toggles arrow->check CSS transforms
+
+          // show small "Subscribed" label (accessible)
+          successText.setAttribute("aria-hidden", "false");
+
+          // Example: keep the check visible. If you want to revert after a while uncomment below:
+          // setTimeout(() => { form.classList.remove('submitted'); input.removeAttribute('disabled'); successText.setAttribute('aria-hidden','true'); input.value=''; }, 5000);
+
+          // Replace the following with your real AJAX call to submit email:
+          // fetch('/api/subscribe', { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ email }) })
+          //   .then(r=>{ if(!r.ok) throw new Error('Network error'); /* show success */ })
+          //   .catch(()=> { /* handle server error: revert UI, show message */ });
+        });
+
+        // allow Enter in input to submit
+        input.addEventListener("keydown", function (ev) {
+          if (ev.key === "Enter") {
+            ev.preventDefault();
+            form.dispatchEvent(new Event("submit", { cancelable: true }));
+          }
+        });
+      })();
+    </script>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script
+      src="https://kit.fontawesome.com/b19def5c8c.js"
+      crossorigin="anonymous"
+    ></script>
+    
+  </body>
+</html>

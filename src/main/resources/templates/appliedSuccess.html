@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Submitted - Job Portal</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f9ff;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .success-card {
+            background: white;
+            border-radius: 10px;
+            padding: 3rem 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            margin-top: 5rem;
+            border-top: 5px solid #2563eb;
+        }
+
+        .success-icon {
+            font-size: 5rem;
+            color: #2563eb;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            color: #1e40af;
+            margin-bottom: 1rem;
+            font-size: 2.2rem;
+        }
+
+        p {
+            color: #4b5563;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+        }
+
+        .details {
+            background: #f0f7ff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .detail-item {
+            margin-bottom: 0.8rem;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #e0e7ff;
+            padding-bottom: 0.8rem;
+        }
+
+        .detail-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            color: #1e40af;
+        }
+
+        .detail-value {
+            color: #4b5563;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .success-card {
+                margin-top: 2rem;
+                padding: 2rem 1rem;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .detail-item {
+                flex-direction: column;
+            }
+            
+            .detail-label {
+                margin-bottom: 0.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-card">
+            <div class="success-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+            </div>
+            <h1>Application Submitted Successfully!</h1>
+            <p>Thank you for applying. We've received your application and will review it shortly.</p>
+            
+            
+            
+            <p>We'll contact you via email regarding the next steps. This usually takes 3-5 business days.</p>
+            
+           <!--   <div style="margin-top: 2rem;">
+                <a href="" class="btn" style="background: #f3f4f6; color: #1f2937; margin-left: 1rem;">Return to Job Listings</a>
+            </div>  -->
+        </div>
+    </div>
+
+    <script>
+        // Set current date
+        document.addEventListener('DOMContentLoaded', function() {
+            const now = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('submissionDate').textContent = now.toLocaleDateString('en-US', options);
+            
+            // Generate random application ID
+            const randomId = 'APP-' + now.getFullYear() + '-' + Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('appId').textContent = randomId;
+            
+            // Get job position from URL parameter if available
+            const urlParams = new URLSearchParams(window.location.search);
+            const jobTitle = urlParams.get('position');
+            if (jobTitle) {
+                document.getElementById('position').textContent = decodeURIComponent(jobTitle);
+            }
+            
+            // Add click handlers
+            document.getElementById('trackBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Tracking feature will be available soon!');
+            });
+        });
+    </script>
+</body>
+</html>

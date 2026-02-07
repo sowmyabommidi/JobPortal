@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Job Post Form</title>
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #f0f6ff;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+      .container {
+        width: 450px;
+        background: #ffffff;
+        padding: 25px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        border-top: 5px solid #1e5fff;
+      }
+      h2 {
+        text-align: center;
+        color: #1e5fff;
+        margin-bottom: 20px;
+        font-size: 22px;
+      }
+      label {
+        font-weight: 600;
+        color: #003f87;
+        display: block;
+        margin-top: 12px;
+      }
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 10px;
+        margin-top: 5px;
+        border: 1px solid #a8c5ff;
+        border-radius: 8px;
+        outline: none;
+        font-size: 14px;
+        background: #f8faff;
+      }
+      textarea {
+        resize: none;
+        height: 70px;
+      }
+      button {
+        width: 100%;
+        background: #1e5fff;
+        color: white;
+        padding: 12px;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+      button:hover {
+        background: #004bd8;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h2>Admin Job Posting Form</h2>
+
+      <form action="/Admin/addJob" method="post">
+        <label>Company Name</label>
+        <input
+          style="display: none"
+          type="number"
+          value="0"
+          name="id"
+          required
+        />
+        <input
+          type="text"
+          placeholder="Enter company name"
+          name="Company"
+          required
+        />
+
+        <label>Job Code</label>
+        <input type="text" placeholder="enter job Code" name="Code" required />
+
+        <label>Role Name</label>
+        <input type="text" placeholder="Job role" name="Title" required />
+
+        <label>Job Description</label>
+        <input
+          type="text"
+          placeholder="job description"
+          name="Description"
+          required
+        />
+
+        <label>Job Requirements</label>
+        <input
+          type="text"
+          placeholder="Job Requirements"
+          name="Requirements"
+          required
+        />
+
+        <label>Employment Type</label>
+        <select name="EmployementType" required>
+          <option value="Select Employement Type" disabled selected>
+            Select Employment Type
+          </option>
+          <option value="Full-time">Full-time</option>
+          <option value="Part-time">Part-time</option>
+          <option value="Internship">Internship</option>
+          <option value="Contract">Contract</option>
+        </select>
+
+        <label>Experience Level</label>
+        <select name="ExperienceLevel" required>
+          <option value="Select Experience Type" disabled selected>
+            Select Experience Type
+          </option>
+          <option value="Fresher">Fresher</option>
+          <option value="1-3 years Experience">1-3 years Experience</option>
+          <option value=">4 years Experience">>4 years Experience</option>
+          <option name="Freshers/Experienced">Freshers/Experienced</option>
+        </select>
+
+        <label>Package</label>
+        <input type="text" placeholder="package" name="Package" required />
+
+        <label>Work Type</label>
+        <select name="workType" required>
+          <option value="select work type" disabled selected>
+            Select Work Type
+          </option>
+          <option value="Work From Office">Work From Office</option>
+          <option value="Remote">Remote</option>
+          <option value="Hybrid">Hybrid</option>
+        </select>
+
+        <label>Location</label>
+        <input type="text" name="Location" required />
+
+        <label>Company URL</label>
+        <input type="text" name="url" required />
+
+        <button type="submit">Add Job Post</button>
+      </form>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Portal | Support</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
+      body {
+        background: #f2f4f7;
+      }
+
+      .header {
+        background: #4ea3ff;
+        color: #fff;
+        padding: 20px;
+        font-size: 24px;
+        font-weight: 600;
+        text-align: center;
+      }
+
+      /* 50-50 Layout */
+      .main {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0;
+        padding: 40px 20px;
+      }
+
+      .left,
+      .right {
+        width: 50%;
+      }
+
+      .left {
+        background: #4ea3ff;
+        color: #fff;
+        padding: 40px;
+        text-align: center; /* <-- NEW: center align content */
+      }
+
+      .left h2 {
+        margin-bottom: 20px;
+        font-weight: 500;
+      }
+
+      .left p {
+        margin-bottom: 12px;
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .map-section {
+        margin-top: 30px;
+      }
+
+      .map-section h2 {
+        margin-bottom: 15px;
+        font-weight: 500;
+      }
+
+      .map-section iframe {
+        width: 90%;
+        border-radius: 10px;
+      }
+
+      /* Right Side Form */
+      .right {
+        padding: 40px;
+        display: flex;
+        justify-content: center; /* center form box */
+        align-items: center;
+      }
+
+      .form-box {
+        width: 90%;
+        max-width: 450px;
+        background: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        text-align: center; /* center heading + button */
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .form-box h2 {
+        margin-bottom: 25px;
+        font-weight: 500;
+      }
+
+      input,
+      select,
+      textarea {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 15px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        font-size: 14px;
+      }
+
+      textarea {
+        resize: none;
+        height: 90px;
+      }
+
+      /* Centered Submit Button */
+      button {
+        padding: 10px 30px;
+        background: #4ea3ff;
+        border: none;
+        color: #fff;
+        font-size: 15px;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-top: 10px;
+      }
+
+      button:hover {
+        background: #2d8cff;
+      }
+
+      /* Responsive */
+      @media (max-width: 900px) {
+        .main {
+          flex-direction: column;
+        }
+        .left,
+        .right {
+          width: 100%;
+        }
+        .map-section iframe {
+          width: 100%;
+        }
+      }
+      #feedback {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #4ea3ff;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  opacity: 0;
+  visibility: hidden;
+  animation: fadeMessage 4s ease-in-out forwards;
+}
+
+@keyframes fadeMessage {
+  0% { opacity: 0; visibility: visible; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; visibility: hidden; }
+}
+    </style>
+  </head>
+
+  <body>
+    <div class="header">Job Portal</div>
+
+    <div class="main">
+   
+      <!-- LEFT SIDE -->
+      <div class="left">
+        <h2>📧 Job Portal Support Services</h2>
+        <p><b>Toll Free Number:</b> 1800-102-5557, 1800-572-5557</p>
+        <p><b>Work Timings:</b> 9:30 AM to 6:30 PM</p>
+        <p><b>Working Days:</b> Monday to Saturday</p>
+        <br />
+        <p><b>Email ID:</b> buntysteam@jobportal.com</p>
+        <p>
+          <b>International Clients:</b> +91 120 4021100 (9:30 AM to 6:00 PM IST)
+        </p>
+
+        <div class="map-section">
+          <h2>Our Location</h2>
+          <iframe
+            src="https://www.google.com/maps?q=Teks%20Academy%20Secunderabad&output=embed"
+            height="290"
+            allowfullscreen=""
+            loading="lazy"
+          ></iframe>
+        </div>
+      </div>
+
+      <!-- RIGHT FORM -->
+      <div class="right">
+       
+        <div class="form-box">
+         <div id="feedback"><p th:text="${feedbackeResponse}"></p></div>
+          <h2>Report a Problem / Need Assistance</h2>
+<form action="/User/feedbackData" method="post">
+          <input type="text" placeholder="Enter Your Name" name="name"/>
+          <input type="email" placeholder="Enter Your Registered Email ID" name="email"/>
+          <input type="number" placeholder="Enter Your Contact Number" name="number"/>
+
+          <select name="issue" required>
+            <option value="Select Area of Concern" disabled selected>Select Area of Concern</option>
+            <option value="Login Issue">Login Issue</option>
+            <option vaalue="Profile Update">Profile Update</option>
+            <option value="Job Application">Job Application</option>
+           
+            <option value="Other">Other</option>
+          </select>
+
+          <textarea placeholder="Enter Your Feedback" name="feedback"></textarea>
+
+          <button type="submit">Submit</button>
+         
+          </form>
+        </div>
+      </div>
+    </div>
+    <script>
+  // Hide message if empty
+  const fb = document.getElementById("feedback");
+  if (fb.innerText.trim() === "") {
+    fb.style.display = "none";
+  }
+</script>
+    
+  </body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xlmns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    table,td,tr,th{
+    border:1px solid black;
+    border-collapse:collapse;
+    }
+    </style>
+</head>
+<body>
+<form action="search" method="">
+<input type="text" name="searchKey" placeholder="search.."/>
+<button type="submit">🔎</button>
+</form>
+   <table>
+    <tr>
+        
+            <th>id</th>
+            <th>company</th>
+            <th>Job code</th>
+            <th>Job title</th>
+            <th>Job Description</th>
+            <th>Job requirements</th>
+            <th>Job Employementtype</th>
+            <th>experience level</th>
+            <th>wotk type</th>
+            <th>package</th>
+             <th>Location</th>
+            <th>apply link</th>
+            
+            
+        </tr>s
+        <tr th:each="job,iter:${jobsList}">
+            <td th:text="${iter.count}"></td>
+            <td th:text="${job.Company}"></td>
+            <td th:text="${job.Code}"></td>
+            <td th:text="${job.Title}"></td>
+            <td th:text="${job.Description}"></td>
+            <td th:text="${job.Requirements}"></td>
+            <td th:text="${job.EmployementType}"></td>
+            <td th:text="${job.ExperienceLevel}"></td>
+            <td th:text="${job.workType}"></td>
+            <td th:text="${job.Package}"></td>
+             <td th:text="${job.Location}"></td>
+            <td> <a th:href="@{applyLink(id=${job.id})}" th:text="${'apply'}"></a></td>
+            
+        </tr>
+    </table> 
+</body>
+</html>

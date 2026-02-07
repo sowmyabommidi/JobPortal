@@ -1,0 +1,1693 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Job Portal</title>
+
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Manrope:wght@400;700&family=Poppins:wght@400;700&family=Outfit:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --primary-blue: rgb(67, 67, 225);
+        --primary-text: #111111;
+        --nav-height: 70px;
+      }
+
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background-color: #ffffff;
+        color: var(--primary-text);
+      }
+
+      /********** NAVBAR **********/
+      .navbar {
+        height: var(--nav-height);
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background-color: #ffffff;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.06);
+        font-family: "Outfit", sans-serif;
+      }
+
+      .navbar .container-fluid {
+        max-width: 1280px;
+      }
+
+      .navbar-brand {
+        font-weight: 700;
+      }
+
+      .main-nav-menu {
+        margin-left: auto;
+        gap: 2rem;
+      }
+
+      .nav-link {
+        color: var(--primary-text);
+        padding: 10px 28px !important;
+        font-size: 16px;
+      }
+
+      .nav-link:hover {
+        color: var(--primary-blue);
+      }
+
+      /* LOGIN + REGISTER BUTTONS */
+      .login-btn,
+      .register-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 28px;
+        font-size: 16px;
+        border-radius: 35px;
+        border: none;
+        font-weight: 500;
+        background-color: #ffffff;
+        color: #000000;
+        box-shadow: 5px 5px 12px rgba(0, 0, 0, 0.15),
+          -5px -5px 12px rgba(255, 255, 255, 0.9);
+        transition: all 0.25s ease;
+      }
+      .login-btn {
+        margin-left: 20px;
+      }
+      .login-btn:hover,
+      .register-btn:hover {
+        background-color: #2563eb;
+        color: #ffffff !important;
+      }
+
+      /********** HERO SECTION **********/
+      .mainpage {
+        background-color: #ffffff;
+        color: #222121;
+        line-height: 1.6;
+        padding-top: var(--nav-height);
+        font-family: "Outfit", sans-serif;
+      }
+
+      .hero {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 44px 24px 24px;
+        min-height: auto;
+        display: flex;
+        align-items: center;
+      }
+
+      .hero-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 200px;
+        align-items: center;
+      }
+
+      .hero-title {
+        font-size: 40px;
+        font-weight: 600;
+        color: #2a2b2d;
+        margin-bottom: 8px;
+      }
+
+      .hero-subtitle {
+        font-size: 18px;
+        color: #6b7280;
+        margin-bottom: 12px;
+      }
+
+      /********** SEARCH BOX **********/
+      .search-box {
+        display: flex;
+        background: #fff;
+        border: 1px solid #e5e7eb;
+        border-radius: 8px;
+        padding: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        max-width: 580px;
+      }
+
+      .search-field {
+        display: flex;
+        align-items: center;
+        flex: 1;
+        padding: 8px 16px;
+        border-right: 1px solid #e5e7eb;
+      }
+
+      .search-field:last-of-type {
+        border-right: none;
+      }
+
+      .search-field input {
+        border: none;
+        outline: none;
+        width: 100%;
+        font-size: 15px;
+      }
+
+      .btn-primary {
+        background-color: #2563eb;
+        color: #fff;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 6px;
+        font-weight: 500;
+        cursor: pointer;
+        margin-left: 8px;
+      }
+
+      .btn-primary:hover {
+        background-color: #1d4ed8;
+      }
+
+      /********** SUGGESTIONS **********/
+      .suggestions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px;
+        font-size: 14px;
+      }
+
+      .suggestion-btn {
+        background: none;
+        border: none;
+        color: #6b7280;
+        cursor: pointer;
+      }
+
+      .suggestion-btn.active {
+        color: #2563eb;
+      }
+
+      .suggestion-btn:hover {
+        color: #2563eb;
+        font-weight: 500;
+        transform: translateY(-1px);
+      }
+
+      /********** HERO IMAGE **********/
+      .hero-image img {
+        max-width: 100%;
+        max-height: 450px;
+        animation: floatHero 2s ease-in-out infinite;
+      }
+
+      @keyframes floatHero {
+        0% {
+          transform: translateY(0);
+        }
+
+        50% {
+          transform: translateY(-10px);
+        }
+
+        100% {
+          transform: translateY(0);
+        }
+      }
+
+      /********** STATS **********/
+      .stat-row {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+      }
+
+      .stat-row img {
+        width: 48px;
+        height: 48px;
+      }
+
+      .stats {
+        background-color: #d0e3f8;
+        padding: 20px 30px 20px;
+        margin-top: 3%;
+      }
+
+      .stats-container {
+        max-width: 1280px;
+        margin: 0% auto;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 32px;
+        text-align: center;
+      }
+
+      .stat-text h3 {
+        font-size: 28px;
+        margin: 0;
+        font-weight: 600;
+        color: #2563eb;
+      }
+
+      .stat-text p {
+        margin: 0;
+        color: #333;
+        font-size: 14px;
+      }
+
+      /********** UPDATED APPLY SECTION **********/
+      .apply-hero {
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        padding: 80px 8%;
+        background-color: #ffffff;
+      }
+
+      .apply-hero-inner {
+        max-width: 1000px;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1.2fr 1fr;
+        column-gap: 30%;
+        align-items: center;
+      }
+
+      .apply-heading-wrap {
+        margin-left: 25%;
+        opacity: 0;
+        transform: translateY(80px);
+        transition: 0.9s ease-out, transform 0.9s ease-out;
+      }
+
+      .apply-heading-wrap.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .apply-heading {
+        font-size: 6rem;
+        line-height: 1.2;
+        font-weight: 500;
+        white-space: nowrap;
+        font-family: "Outfit", sans-serif;
+        color: #111111;
+      }
+
+      .apply-right-text {
+        color: var(--secondary-text);
+        font-size: 1.2rem;
+        line-height: 1.6;
+        min-width: 300px;
+        font-weight: 500;
+      }
+
+      .apply-cta-btn {
+        margin-top: 10%;
+        background-color: white;
+        color: black;
+        padding: 14px 28px;
+        border-radius: 30px;
+        border: 1px solid gray;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: 0.3s ease;
+      }
+
+      .apply-cta-btn:hover {
+        background-color: rgb(0, 0, 0);
+        color: white;
+      }
+
+      .apply-hero-inner > div:last-child {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      /********** PAGE 3 **********/
+      .section3 {
+        padding: 4rem 1rem;
+        max-width: 1000vh;
+        margin: 0 auto;
+        min-height: 100vh;
+        background: rgb(246, 247, 255);
+        color: #2563eb;
+        font-family: "Outfit", sans-serif;
+        padding-top: 8%;
+      }
+
+      .header3 {
+        text-align: center;
+        margin-bottom: 4rem;
+        font-family: "Outfit", sans-serif;
+      }
+
+      .subtitle3 {
+        font-family: "Outfit", sans-serif;
+        font-size: 0.875rem;
+        font-weight: 600;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: #2e2f30;
+        margin-bottom: 1rem;
+      }
+
+      .title3 {
+        font-family: "Outfit", sans-serif;
+        font-size: 2.5rem;
+        font-weight: 700;
+        color: #2a2b2d;
+        /* color: #2563eb; */
+      }
+
+      @media (min-width: 768px) {
+        .title {
+          font-size: 3.5rem;
+        }
+      }
+
+      /* Steps Container */
+      .steps-container3 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2rem;
+      }
+
+      @media (min-width: 1024px) {
+        .steps-container3 {
+          flex-direction: row;
+          justify-content: center;
+          align-items: flex-start;
+          gap: 1.5rem;
+        }
+      }
+
+      /* Step Item Wrapper */
+      .step-wrapper3 {
+        display: flex;
+        align-items: flex-start;
+      }
+
+      /* Wave offsets for desktop */
+      @media (min-width: 1024px) {
+        .step-wrapper3:nth-child(1) .step-card3 {
+          margin-top: 0;
+        }
+
+        .step-wrapper3:nth-child(2) .step-card3 {
+          margin-top: 4rem;
+        }
+
+        .step-wrapper3:nth-child(3) .step-card3 {
+          margin-top: 0;
+        }
+
+        .step-wrapper3:nth-child(4) .step-card3 {
+          margin-top: 6rem;
+        }
+      }
+
+      /* Step Card */
+      .step-card3 {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        animation: float 3s ease-in-out infinite;
+      }
+
+      .step-wrapper3:nth-child(2) .step-card3 {
+        animation-delay: 0.2s;
+      }
+
+      .step-wrapper3:nth-child(3) .step-card3 {
+        animation-delay: 0.4s;
+      }
+
+      .step-wrapper3:nth-child(4) .step-card3 {
+        animation-delay: 0.6s;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+
+        50% {
+          transform: translateY(-10px);
+        }
+      }
+
+      .icon-circle3 {
+        position: relative;
+        width: 5rem;
+        height: 5rem;
+        background: hsl(80, 50%, 92%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 2rem;
+      }
+
+      @media (min-width: 768px) {
+        .icon-circle3 {
+          width: 6rem;
+          height: 6rem;
+        }
+      }
+
+      .icon-circle3 svg {
+        width: 2rem;
+        height: 2rem;
+        color: rgb(61, 61, 61);
+      }
+
+      @media (min-width: 768px) {
+        .icon-circle3 svg {
+          width: 2.5rem;
+          height: 2.5rem;
+        }
+      }
+
+      .step-badge {
+        position: absolute;
+        top: -0.25rem;
+        right: -0.25rem;
+        width: 1.75rem;
+        height: 1.75rem;
+        background-color: hsl(221, 100%, 80%);
+        /* background: hsl(227, 100%, 89%); */
+        color: hsl(0, 0%, 9%);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.875rem;
+        font-weight: 600;
+      }
+
+      .step-title {
+        font-family: "Outfit", sans-serif;
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      @media (min-width: 768px) {
+        .step-title {
+          font-size: 1.25rem;
+        }
+      }
+
+      .step-description {
+        color: hsl(160, 5%, 11%);
+        font-size: 0.875rem;
+        max-width: 200px;
+        line-height: 1.6;
+      }
+
+      /* Arrow Connector */
+      .arrow-connector {
+        display: none;
+        color: hsl(210, 57%, 64%);
+        margin: 3rem 1.5rem;
+      }
+
+      @media (min-width: 1024px) {
+        .arrow-connector {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .step-wrapper3:nth-child(1) .arrow-connector {
+          margin-top: 2rem;
+        }
+
+        .step-wrapper3:nth-child(2) .arrow-connector {
+          margin-top: 4rem;
+        }
+
+        .step-wrapper3:nth-child(3) .arrow-connector {
+          margin-top: 4rem;
+        }
+      }
+
+      .arrow-down {
+        transform: rotate(25deg);
+      }
+
+      .arrow-up {
+        transform: rotate(-25deg);
+      }
+
+      /* Mobile arrows */
+      .mobile-arrow {
+        display: block;
+        transform: rotate(90deg);
+        color: hsl(160, 25%, 50%);
+        margin: 0.5rem 0;
+      }
+
+      @media (min-width: 1024px) {
+        .mobile-arrow {
+          display: none;
+        }
+      }
+
+      /* Mobile wave offset */
+      @media (max-width: 767px) {
+        .step-wrapper3:nth-child(2),
+        .step-wrapper3:nth-child(4) {
+          margin-left: 2rem;
+        }
+      }
+      /* FOOTER CSS - Add this to your stylesheet */
+      .jf-footer {
+        background-color: #2a2b2d;
+        color: #b0b0b0;
+        padding: 60px 0 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          sans-serif;
+      }
+      .jf-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
+      }
+      .jf-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr 1fr 1.5fr;
+        gap: 90px;
+      }
+      @media (max-width: 992px) {
+        .jf-grid {
+          grid-template-columns: 1fr 1fr;
+        }
+      }
+      @media (max-width: 576px) {
+        .jf-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Brand Section */
+      .jf-brand-section {
+        padding-right: 20px;
+      }
+      .jf-logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+      .jf-logo-icon {
+        width: 45px;
+        height: 45px;
+        background-color: #2563eb;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+      }
+      .jf-logo-text {
+        font-size: 24px;
+        font-weight: 700;
+        color: white;
+        letter-spacing: 1px;
+      }
+      .jf-description {
+        font-size: 14px;
+        line-height: 1.7;
+        margin-bottom: 25px;
+        color: #9a9a9a;
+      }
+      .jf-contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-bottom: 25px;
+      }
+      .jf-contact-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 14px;
+        color: #9a9a9a;
+      }
+      .jf-contact-item svg {
+        color: #2563eb;
+        flex-shrink: 0;
+      }
+      .jf-social-links {
+        display: flex;
+        gap: 12px;
+      }
+      .jf-social-icon {
+        width: 40px;
+        height: 40px;
+        background-color: rgba(37, 99, 235, 0.15);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #2563eb;
+        transition: all 0.3s ease;
+        text-decoration: none;
+      }
+      .jf-social-icon:hover {
+        background-color: #2563eb;
+        color: white;
+        transform: translateY(-3px);
+      }
+
+      /* Links Sections */
+      .jf-links-section {
+        padding-top: 10px;
+      }
+      .jf-section-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: white;
+        margin-bottom: 25px;
+        position: relative;
+        padding-bottom: 12px;
+      }
+      .jf-section-title::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 40px;
+        height: 3px;
+        background-color: #2563eb;
+        border-radius: 2px;
+      }
+      .jf-links-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .jf-links-list li {
+        margin-bottom: 12px;
+      }
+      .jf-links-list a {
+        color: #9a9a9a;
+        text-decoration: none;
+        font-size: 14px;
+        transition: all 0.3s ease;
+        display: inline-block;
+      }
+      .jf-links-list a:hover {
+        color: #2563eb;
+        padding-left: 8px;
+      }
+      .jf-newsletter-section {
+        position: relative;
+      }
+      .jf-newsletter-text {
+        color: #a9b6b4;
+        font-size: 14px;
+        margin-bottom: 12px;
+        max-width: 360px;
+      }
+      .jf-form-wrap {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .jf-newsletter-form {
+        display: flex;
+        align-items: center;
+        gap: 0;
+        width: 100%;
+        max-width: 420px;
+        position: relative;
+      }
+      .jf-newsletter-input {
+        flex: 1;
+        padding: 12px 16px;
+        border-radius: 12px 0 0 12px;
+        border: 0;
+        background: #eaf2f7;
+        color: #052a2a;
+        font-size: 14px;
+        outline: none;
+        box-shadow: inset 0 2px 0 rgba(0, 0, 0, 0.02);
+        transition: box-shadow 0.18s ease, transform 0.12s ease;
+      }
+      .jf-newsletter-input:focus {
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+        transform: translateY(-2px);
+      }
+      .jf-newsletter-input::placeholder {
+        color: #86979a;
+      }
+
+      /* button uses relative positioning so we can animate arrow -> check inside it */
+      .jf-newsletter-btn {
+        position: relative;
+        width: 64px;
+        height: 44px;
+        border-radius: 0 12px 12px 0;
+        border: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #2f6af0;
+        cursor: pointer;
+        box-shadow: 0 8px 22px rgba(47, 106, 240, 0.14);
+        transition: transform 0.14s ease, box-shadow 0.14s ease,
+          background 0.14s;
+        overflow: hidden;
+      }
+      .jf-newsletter-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 28px rgba(47, 106, 240, 0.18);
+      }
+      .jf-newsletter-btn:active {
+        transform: translateY(-1px);
+      }
+
+      /* arrow & check icons inside the button */
+      .jf-newsletter-btn .icon {
+        display: block;
+        width: 22px;
+        height: 22px;
+        transition: transform 0.28s cubic-bezier(0.2, 0.9, 0.2, 1),
+          opacity 0.2s ease;
+      }
+
+      /* check hidden initially (scaled down) */
+      .jf-newsletter-btn .check {
+        transform: translateX(-6px) scale(0.2);
+        opacity: 0;
+        position: absolute;
+      }
+      .jf-newsletter-btn .arrow {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+        position: relative;
+      }
+
+      /* on success: arrow flies left & fades, check scales up and becomes visible */
+      .jf-newsletter-form.submitted .jf-newsletter-btn .arrow {
+        transform: translateX(-10px) scale(0.6);
+        opacity: 0;
+      }
+
+      .jf-newsletter-form.submitted .jf-newsletter-btn .check {
+        transform: translateX(0) scale(1);
+        opacity: 1;
+      }
+      .jf-newsletter-form.submitted .jf-newsletter-btn {
+        box-shadow: 0 18px 40px rgba(47, 106, 240, 0.18);
+        background: linear-gradient(180deg, #2f6af0, #1f54d8);
+      }
+      .jf-newsletter-form.invalid .jf-newsletter-input {
+        animation: jf-shake 0.36s;
+        box-shadow: 0 0 0 6px rgba(255, 80, 80, 0.06);
+      }
+
+      @keyframes jf-shake {
+        0% {
+          transform: translateX(0);
+        }
+        25% {
+          transform: translateX(-6px);
+        }
+        50% {
+          transform: translateX(6px);
+        }
+        75% {
+          transform: translateX(-4px);
+        }
+        100% {
+          transform: translateX(0);
+        }
+      }
+
+      /* success text (optional label inside button area) - keep hidden by default */
+      .jf-success-label {
+        position: absolute;
+        left: calc(100% + 18px);
+        top: 50%;
+        transform: translateY(-50%);
+        color: #dff3ef;
+        background: transparent;
+        font-size: 13px;
+        opacity: 0;
+        transition: opacity 0.28s ease, transform 0.28s ease;
+        pointer-events: none;
+      }
+      .jf-newsletter-form.submitted + .jf-success-label {
+        opacity: 1;
+        transform: translateY(-50%) translateX(0);
+      }
+
+      /* bottom bar - compact and centered */
+      .jf-bottom-bar {
+        border-top: 1px solid rgba(255, 255, 255, 0.03);
+        margin-top: 26px;
+        padding: 14px 0 6px;
+        text-align: center;
+      }
+      .jf-bottom-bar p {
+        margin: 0;
+        color: #c8cbcb;
+        font-size: 14px;
+      }
+
+      /* tiny accessible-only helper */
+      .sr-only {
+        position: absolute !important;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+        border: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <a class="navbar-brand text-primary" href="#">JobPortal</a>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul
+            class="navbar-nav mb-2 mb-lg-0 d-flex align-items-center main-nav-menu"
+          >
+            <li class="nav-item">
+              <a class="nav-link" href="/AdminRegisterForm">Admin</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/contactus">Contact Us</a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link login-btn" th:href="@{login}">Login</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link register-btn" th:href="@{registerForm}"
+                >Register</a
+              >
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <div class="mainpage">
+      <section class="hero">
+        <div class="hero-container">
+          <div class="hero-content">
+            <h1 class="hero-title">
+              Find a job that suits your interest & skills.
+            </h1>
+            <p class="hero-subtitle">
+              Find the Perfect Jobs, Employment & Career Opportunities.
+            </p>
+
+            <!-- SEARCH BOX -->
+            <div class="search-box">
+              <div class="search-field">
+              <form action="/homeSearch" method="post">
+                <input
+                  type="text"
+                  placeholder="Job title, Keyword..."
+                  id="jobInput"
+                  name="jobType"
+                />
+                <input style="display:none;"
+                  type="number"
+                  
+                  name="id"
+                  th:value="${id}"
+                />
+              </div>
+              <div class="search-field">
+                <input
+                  type="text"
+                  placeholder="Your Location"
+                  id="locationInput"
+                  name="jobLocation"
+                />
+              </div>
+              <button class="btn-primary"  type="submit" >Find Job</button>
+              </form>
+            </div>
+
+            <!-- SUGGESTIONS -->
+            <div class="suggestions">
+              <span class="suggestions-label">Suggestion:</span>
+
+              <button
+                class="suggestion-btn"
+                onclick="setSuggestion('Designer', this)"
+              >
+                Designer
+              </button>
+
+              <button
+                class="suggestion-btn"
+                onclick="setSuggestion('Software Developer', this)"
+              >
+                Software Developer
+              </button>
+
+              <button
+                class="suggestion-btn"
+                onclick="setSuggestion('Digital Marketing', this)"
+              >
+                Digital Marketing
+              </button>
+
+              <button
+                class="suggestion-btn"
+                onclick="setSuggestion('Data Analyst', this)"
+              >
+                Data Analyst
+              </button>
+            </div>
+          </div>
+
+          <!-- HERO IMAGE -->
+          <div class="hero-image">
+            <img
+              src="/images/img1.jpg"
+              alt="Hero Image"
+            />
+          </div>
+        </div>
+      </section>
+
+      <!-- Stats Section -->
+      <section class="stats">
+        <div class="stats-container">
+          <div class="stat-item">
+            <div class="stat-row">
+              <img
+                src="https://img.icons8.com/?size=100&id=9489&format=png&color=000000"
+                alt="image"
+              />
+              <div class="stat-text">
+                <h3 class="counter" data-target="2860">0</h3>
+                <p>Live Job</p>
+              </div>
+            </div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-row">
+              <img
+                src="https://img.icons8.com/?size=100&id=e9femSksvyZL&format=png&color=000000"
+                alt="Companies"
+              />
+              <div class="stat-text">
+                <h3 class="counter" data-target="645">0</h3>
+                <p>Companies</p>
+              </div>
+            </div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-row">
+              <img
+                src="https://img.icons8.com/?size=100&id=3j80kHJMcGyq&format=png&color=000000"
+                alt="img Candidates"
+              />
+              <div class="stat-text">
+                <h3 class="counter" data-target="58320">0</h3>
+                <p>Candidates</p>
+              </div>
+            </div>
+          </div>
+          <div class="stat-item">
+            <div class="stat-row">
+              <img
+                src="https://img.icons8.com/?size=100&id=20397&format=png&color=000000"
+                alt="Hired"
+              />
+              <div class="stat-text">
+                <h3 class="counter" data-target="8532">0</h3>
+                <p>People Hired</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- APPLY SECTION -->
+    <section class="apply-hero">
+      <div class="apply-hero-inner">
+        <div class="apply-heading-wrap" id="applyHeading">
+          <h1 class="apply-heading">
+            Apply From <br />
+            Anywhere<br />Today. Work <br />
+            Globally.
+          </h1>
+        </div>
+
+        <div>
+          <p class="apply-right-text">
+            Easily connect with global opportunities right from where you are.
+            Our platform lets you discover and apply for jobs across the world.
+          </p>
+
+          <button class="apply-cta-btn"><a style="text-decoration:none;" th:href="@{AllJobs(name=${name},id=${id})}">Start Applying →</a></button>
+        </div>
+      </div>
+    </section>
+
+    <!----- PAGE 3 ----->
+    <section class="section3">
+      <div class="header3">
+        <p class="subtitle3">Working Process</p>
+        <h2 class="title3">How Does You Apply</h2>
+      </div>
+
+      <div class="steps-container3">
+        <!-- Step 1 -->
+        <div class="step-wrapper3">
+          <div class="step-card3">
+            <div class="icon-circle3">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"
+                />
+              </svg>
+              <span class="step-badge">01</span>
+            </div>
+            <h3 class="step-title">Create Free Account</h3>
+            <p class="step-description">
+              Begin your job search by creating an account
+            </p>
+          </div>
+          <div class="arrow-connector arrow-down">
+            <svg width="60" height="40" viewBox="0 0 60 40" fill="none">
+              <path
+                d="M5 20C5 20 20 20 30 20C40 20 55 20 55 20"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-dasharray="4 4"
+              />
+              <path
+                d="M45 12L55 20L45 28"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <div class="mobile-arrow">
+          <svg width="60" height="40" viewBox="0 0 60 40" fill="none">
+            <path
+              d="M5 20C5 20 20 20 30 20C40 20 55 20 55 20"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-dasharray="4 4"
+            />
+            <path
+              d="M45 12L55 20L45 28"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+
+        <!-- Step 2 -->
+        <div class="step-wrapper3">
+          <div class="step-card3">
+            <div class="icon-circle3">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                />
+              </svg>
+              <span class="step-badge">02</span>
+            </div>
+            <h3 class="step-title">Browse Jobs</h3>
+            <p class="step-description">
+              Explore thousands of jobs curated for you
+            </p>
+          </div>
+          <div class="arrow-connector arrow-up">
+            <svg width="60" height="40" viewBox="0 0 60 40" fill="none">
+              <path
+                d="M5 20C5 20 20 20 30 20C40 20 55 20 55 20"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-dasharray="4 4"
+              />
+              <path
+                d="M45 12L55 20L45 28"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <div class="mobile-arrow">
+          <svg width="60" height="40" viewBox="0 0 60 40" fill="none">
+            <path
+              d="M5 20C5 20 20 20 30 20C40 20 55 20 55 20"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-dasharray="4 4"
+            />
+            <path
+              d="M45 12L55 20L45 28"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+
+        <!-- Step 3 -->
+        <div class="step-wrapper3">
+          <div class="step-card3">
+            <div class="icon-circle3">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                />
+              </svg>
+              <span class="step-badge">03</span>
+            </div>
+            <h3 class="step-title">Submit Resume</h3>
+            <p class="step-description">Upload your resume to get noticed</p>
+          </div>
+          <div class="arrow-connector arrow-down">
+            <svg width="60" height="40" viewBox="0 0 60 40" fill="none">
+              <path
+                d="M5 20C5 20 20 20 30 20C40 20 55 20 55 20"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-dasharray="4 4"
+              />
+              <path
+                d="M45 12L55 20L45 28"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <div class="mobile-arrow">
+          <svg width="60" height="40" viewBox="0 0 60 40" fill="none">
+            <path
+              d="M5 20C5 20 20 20 30 20C40 20 55 20 55 20"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-dasharray="4 4"
+            />
+            <path
+              d="M45 12L55 20L45 28"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+
+        <!-- Step 4 -->
+        <div class="step-wrapper3">
+          <div class="step-card3">
+            <div class="icon-circle3">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                stroke-width="2"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"
+                />
+              </svg>
+              <span class="step-badge">04</span>
+            </div>
+            <h3 class="step-title">Apply Now</h3>
+            <p class="step-description">
+              Take the next step toward your career
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+     <!-- FOOTER HTML - Add this where you want the footer -->
+    <footer class="jf-footer">
+      <div class="jf-container">
+        <div class="jf-grid">
+          <!-- Brand Section -->
+          <div class="jf-brand-section">
+            <div class="jf-logo">
+              <div class="logo-icon">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
+                  <circle
+                    cx="10"
+                    cy="10"
+                    r="4"
+                    stroke="white"
+                    stroke-width="2"
+                  />
+                  <path
+                    d="M20 20L15 15"
+                    stroke="white"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                  <path
+                    d="M10 14c-2.5 0-4 1.3-4 3v1"
+                    stroke="white"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  />
+                </svg>
+              </div>
+              <span class="jf-logo-text">JobPortal</span>
+            </div>
+            <p class="jf-description">
+              Your trusted partner in finding the perfect career opportunity. We
+              connect talented professionals with top employers.
+            </p>
+            <div class="jf-contact-info">
+              <div class="jf-contact-item">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+                <span>123 Job Street, Career City</span>
+              </div>
+              <div class="jf-contact-item">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect width="20" height="16" x="2" y="4" rx="2" />
+                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                </svg>
+                <span>jobportal@gmail.com</span>
+              </div>
+              <div class="jf-contact-item">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"
+                  />
+                </svg>
+                <span>+1 234 567 890</span>
+              </div>
+            </div>
+            <div class="jf-social-links">
+              <a href="#" class="jf-social-icon" aria-label="Facebook">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"
+                  />
+                </svg>
+              </a>
+              <a href="#" class="jf-social-icon" aria-label="Twitter">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"
+                  />
+                </svg>
+              </a>
+              <a href="#" class="jf-social-icon" aria-label="Instagram">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                </svg>
+              </a>
+              <a href="#" class="jf-social-icon" aria-label="LinkedIn">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+                  />
+                  <rect width="4" height="12" x="2" y="9" />
+                  <circle cx="4" cy="4" r="2" />
+                </svg>
+              </a>
+            </div>
+          </div>
+
+          <!-- Quick Links -->
+          <div class="jf-links-section">
+            <h3 class="jf-section-title">Quick Links</h3>
+            <ul class="jf-links-list">
+              <li><a href=".navbar">Home</a></li>
+              <li><a href="#">About Us</a></li>
+              <li><a href="#">Services</a></li>
+              <li><a href="#">Contact Us</a></li>
+            </ul>
+          </div>
+
+          <!-- Find Jobs -->
+          <div class="jf-links-section">
+            <h3 class="jf-section-title">Find Jobs</h3>
+            <ul class="jf-links-list">
+              <li><a href="#">Browse Jobs</a></li>
+              <li><a href="#">Companies</a></li>
+              <li><a href="#">Job Post</a></li>
+              <li><a href="#">Job List</a></li>
+            </ul>
+          </div>
+
+          <!-- Newsletter -->
+          <div class="jf-newsletter-section" aria-labelledby="newsletter-title">
+            <h3 id="newsletter-title" class="jf-section-title">
+              Subscribe Newsletter
+            </h3>
+            <p class="jf-newsletter-text">
+              We have an array of exciting job opportunities that are waiting
+              for talented individuals like you.
+            </p>
+
+            <div class="jf-form-wrap">
+              <form
+                class="jf-newsletter-form"
+                id="jf-newsletter-form"
+                novalidate
+              >
+                <label class="sr-only" for="jf-email">Email</label>
+                <input
+                  id="jf-email"
+                  name="email"
+                  type="email"
+                  class="jf-newsletter-input"
+                  placeholder="Enter your email"
+                  required
+                  aria-required="true"
+                />
+                <button
+                  type="submit"
+                  class="jf-newsletter-btn"
+                  aria-label="Subscribe"
+                >
+                  <!-- arrow (shown initially) -->
+                  <svg
+                    class="icon arrow"
+                    width="22"
+                    height="22"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 12h14" />
+                    <path d="m12 5 7 7-7 7" />
+                  </svg>
+                  <!-- check (hidden initially) -->
+                  <svg
+                    class="icon check"
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="white"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M20 6L9 17l-5-5" />
+                  </svg>
+                </button>
+              </form>
+
+              <!-- optional small label that appears to the right of the button on success (kept subtle) -->
+              <div
+                class="jf-success-label"
+                role="status"
+                id="jf-success-text"
+                aria-live="polite"
+                aria-hidden="true"
+              >
+                Subscribed
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Bar -->
+        <div class="jf-bottom-bar">
+          <p>Copyright © 2024 JobPortal. All Rights Reserved.</p>
+        </div>
+      </div>
+    </footer>
+    <!-- ====== JS: validation + animate arrow->check + show label ====== -->
+    <script>
+      (function () {
+        const form = document.getElementById("jf-newsletter-form");
+        const input = document.getElementById("jf-email");
+        const successText = document.getElementById("jf-success-text");
+
+        function isValidEmail(v) {
+          return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+        }
+
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          form.classList.remove("invalid");
+
+          const email = input.value.trim();
+          if (!isValidEmail(email)) {
+            // invalid: shake input
+            form.classList.add("invalid");
+            input.focus();
+            setTimeout(() => form.classList.remove("invalid"), 700);
+            return;
+          }
+
+          // success UI: show icon animation inside button and label
+          input.setAttribute("disabled", "true");
+          form.classList.add("submitted"); // toggles arrow->check CSS transforms
+
+          // show small "Subscribed" label (accessible)
+          successText.setAttribute("aria-hidden", "false");
+
+          // Example: keep the check visible. If you want to revert after a while uncomment below:
+          // setTimeout(() => { form.classList.remove('submitted'); input.removeAttribute('disabled'); successText.setAttribute('aria-hidden','true'); input.value=''; }, 5000);
+
+          // Replace the following with your real AJAX call to submit email:
+          // fetch('/api/subscribe', { method:'POST', headers:{ 'Content-Type':'application/json' }, body: JSON.stringify({ email }) })
+          //   .then(r=>{ if(!r.ok) throw new Error('Network error'); /* show success */ })
+          //   .catch(()=> { /* handle server error: revert UI, show message */ });
+        });
+
+        // allow Enter in input to submit
+        input.addEventListener("keydown", function (ev) {
+          if (ev.key === "Enter") {
+            ev.preventDefault();
+            form.dispatchEvent(new Event("submit", { cancelable: true }));
+          }
+        });
+      })();
+    </script>
+    
+
+    <!-- JavaScript -->
+    <script>
+      // Suggestions animation
+      function setSuggestion(text, btn) {
+        document.getElementById("jobInput").value = text;
+        document.querySelectorAll(".suggestion-btn").forEach((b) => {
+          b.classList.remove("active");
+        });
+
+        btn.classList.add("active");
+      }
+
+      function findJob() {
+        const j = jobInput.value;
+        const l = locationInput.value;
+        alert(`Searching for "${j}" jobs in "${l}"`);
+      }
+
+      // Counter animation
+      window.addEventListener("load", () => {
+        document.querySelectorAll(".counter").forEach((counter) => {
+          let target = +counter.dataset.target;
+          let current = 0;
+
+          let interval = setInterval(() => {
+            current += Math.floor(target / 100);
+            counter.innerText = current.toLocaleString("en-IN");
+
+            if (current >= target) {
+              counter.innerText = target.toLocaleString("en-IN");
+              clearInterval(interval);
+            }
+          }, 20);
+        });
+      });
+
+      // Apply heading animation
+      document.addEventListener("DOMContentLoaded", () => {
+        const heading = document.getElementById("applyHeading");
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            if (entries[0].isIntersecting) {
+              heading.classList.add("visible");
+            }
+          },
+          { threshold: 0.3 }
+        );
+
+        observer.observe(heading);
+      });
+    </script>
+  </body>
+</html>
